@@ -86,11 +86,17 @@ WSGI_APPLICATION = 'rentame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'renta_casas',       # Cambia por tu DB en XAMPP
+        'USER': 'root',              # Ej. 'root'
+        'PASSWORD': '',       # Ej. ''
+        'HOST': '127.0.0.1',               # Localhost de XAMPP
+        'PORT': '3306',                     # Puerto por defecto de MySQL
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -132,3 +138,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

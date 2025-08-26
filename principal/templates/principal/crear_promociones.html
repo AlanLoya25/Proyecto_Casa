@@ -1,0 +1,102 @@
+{% extends "inicio/encabezado.html" %}
+{% block titulo %}Crear Promoción - CasasPlus{% endblock %}
+
+{% block contenido %}
+<div class="container my-5 d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-12">
+
+        <!-- Tarjeta contenedora -->
+        <div class="card shadow-lg border-0 rounded-4 p-4 animate-card">
+
+            <!-- Título centrado -->
+            <h2 class="text-center fw-bold text-primary mb-2">🎉 Crear Nueva Promoción</h2>
+            <p class="text-center text-muted mb-4">
+                Llena los siguientes campos para agregar una nueva promoción a tu catálogo.
+            </p>
+            <hr>
+
+            <!-- Formulario -->
+            <form method="post" class="mt-3">
+                {% csrf_token %}
+                
+                <!-- Estilo para los campos -->
+                <div class="form-group mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Botones -->
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg px-4 shadow-sm rounded-pill">
+                        <i class="bi bi-check-circle"></i> Guardar
+                    </button>
+                    <a href="{% url 'casas:lista_promociones' %}" class="btn btn-secondary btn-lg px-4 shadow-sm rounded-pill">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos personalizados -->
+<style>
+    /* Fondo de página más suave */
+    body {
+        background-color: #f8f9fa;
+    }
+
+    /* Tarjeta principal con animación */
+    .animate-card {
+        animation: fadeInUp 0.7s ease-in-out;
+        background-color: #ffffff;
+    }
+
+    /* Animación de aparición */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Mejor estilo para inputs y selects */
+    input, select, textarea {
+        border-radius: 12px !important;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover y focus más modernos */
+    input:focus, select:focus, textarea:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 6px rgba(13, 110, 253, 0.4);
+        outline: none;
+    }
+
+    /* Botones con transición suave */
+    .btn {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-success:hover {
+        background-color: #198754;
+        transform: scale(1.05);
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+        transform: scale(1.05);
+    }
+
+    /* Bordes de la tarjeta */
+    .card {
+        border-radius: 18px;
+    }
+</style>
+{% endblock %}
