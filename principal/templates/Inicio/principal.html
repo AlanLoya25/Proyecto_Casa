@@ -1,0 +1,117 @@
+{% extends "inicio/encabezado.html" %}
+{% load static %}
+
+{% block titulo %}Principal{% endblock %}
+
+{% block contenido %}
+<style>
+  h1 { 
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 45px; 
+    color: #2c3e50; 
+    font-weight: bold; 
+  }
+
+  .contenido { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr 1fr; 
+    grid-template-rows: auto auto; 
+    gap: 20px; 
+    padding: 20px; 
+    align-items: start; 
+  }
+
+  .columna { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+  }
+
+  .columna img { 
+    width: 100%; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15); 
+    transition: transform 0.3s ease; 
+  }
+
+  .columna img:hover {
+    transform: scale(1.03);
+  }
+
+  .principal img { 
+    width: 100%; 
+    height: auto; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15); 
+    transition: transform 0.3s ease; 
+  }
+
+  .principal img:hover {
+    transform: scale(1.03);
+  }
+
+  .texto { 
+    font-size: 15px; 
+    line-height: 1.7; 
+    color: #34495e; 
+  }
+
+  h2 { 
+    color: #27ae60; 
+    font-size: 22px; 
+    margin-bottom: 10px; 
+    font-weight: bold; 
+  }
+</style>
+
+<h1>Bienvenido a CasasPlus.mx</h1>
+
+<div class="contenido">
+  <!-- Columna izquierda -->
+  <div class="columna">
+    <div>
+      <h2>¿Quiénes Somos?</h2>
+      <p class="texto">
+        <strong>CasasPlus.mx</strong> es una plataforma especializada en la renta de casas en línea, diseñada para que encuentres el hogar perfecto para tus vacaciones, mudanza temporal o estadía prolongada.
+        <br><br>
+        Nuestro objetivo es brindarte una experiencia confiable, rápida y segura, con una amplia selección de casas modernas, cómodas y bien ubicadas.
+      </p>
+      <p class="texto">
+        Nos destacamos por ofrecer transparencia, atención personalizada y los mejores precios del mercado, conectando a propietarios con inquilinos de forma sencilla y eficaz.
+      </p>
+    </div>
+    <img src="http://3.bp.blogspot.com/-I7lUGP1zISU/UM1DhZ79fII/AAAAAAAAAIY/5-6WHT7674s/s1600/casas+lujosas.jpg" alt="Casas modernas en renta">
+  </div>
+
+  <!-- Columna central -->
+  <div class="principal">
+    <img src="https://www.estrenocasa.com/wp-content/uploads/2018/06/mansion-lujosa.jpg" alt="Casa interior moderna">
+    <div>
+      <h2>Nuestras Casas</h2>
+      <p class="texto">
+        Contamos con una gran variedad de casas: desde residencias minimalistas hasta propiedades familiares amplias y equipadas con todo lo que necesitas.
+        <br><br>
+        Cada casa ha sido seleccionada cuidadosamente para garantizarte comodidad, seguridad y la mejor experiencia durante tu estadía.
+      </p>
+    </div>
+  </div>
+
+  <!-- Columna derecha -->
+  <div class="columna">
+    <div>
+      <h2>¿Qué Ofrecemos?</h2>
+      <p class="texto">
+        - Reservaciones en línea rápidas y seguras. <br>
+        - Casas totalmente equipadas y listas para habitar. <br>
+        - Opciones flexibles para vacaciones, trabajo remoto o renta mensual. <br>
+        - Opiniones reales de otros usuarios. <br>
+        - Promociones exclusivas durante todo el año.
+        <br><br>
+        Además, nuestro equipo te asesora para que encuentres la casa ideal según tu presupuesto y necesidades.
+      </p>
+    </div>
+    <img src="https://www.10stunninghomes.com/wp-content/uploads/contemporary-house-in-montserrey-mexico-for-luxurious-lifestyle.jpg" alt="Vista de casas modernas">
+  </div>
+</div>
+{% endblock %}

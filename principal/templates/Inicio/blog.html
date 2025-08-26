@@ -1,0 +1,204 @@
+{% extends "inicio/encabezado.html" %}
+{% load static %}
+
+{% block titulo %}Blog - CasasPlus.mx{% endblock %}
+
+{% block contenido %}
+<style>
+  h1 { 
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 45px; 
+    color: #2c3e50; 
+    font-weight: bold; 
+  }
+
+  .contenido { 
+    display: grid; 
+    grid-template-columns: 1fr 2fr 1fr; 
+    gap: 20px; 
+    padding: 20px; 
+    align-items: start; 
+  }
+
+  .columna { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+  }
+
+  .columna img, .post img { 
+    width: 100%; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15); 
+    transition: transform 0.3s ease; 
+  }
+
+  .columna img:hover, .post img:hover {
+    transform: scale(1.03);
+  }
+
+  .principal { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 30px; 
+  }
+
+  .post { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1); 
+  }
+
+  .post h3 { 
+    color: #27ae60; 
+    font-size: 22px; 
+    margin-bottom: 10px; 
+    font-weight: bold; 
+  }
+
+  .post p { 
+    font-size: 15px; 
+    line-height: 1.7; 
+    color: #34495e; 
+  }
+
+  .extra-info {
+    display: none;
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .leer-mas-btn {
+    cursor: pointer;
+    color: #27ae60;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .leer-mas-btn:hover {
+    color: #1e874b;
+  }
+
+  h2 { 
+    color: #27ae60; 
+    font-size: 22px; 
+    margin-bottom: 10px; 
+    font-weight: bold; 
+  }
+
+  .categorias, .recientes { 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1); 
+  }
+
+  .categorias ul, .recientes ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .categorias ul li, .recientes ul li {
+    margin-bottom: 10px;
+  }
+
+  .categorias ul li a, .recientes ul li a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .categorias ul li a:hover, .recientes ul li a:hover {
+    color: #27ae60;
+  }
+
+  @media (max-width: 768px) {
+    .contenido {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<h1>Blog de CasasPlus.mx</h1>
+
+<div class="contenido">
+  <!-- Columna izquierda: Categorías -->
+  <div class="columna categorias">
+    <h2>Categorías</h2>
+    <ul>
+      <li><a href="#">Renta de Casas</a> – Guías, consejos y tendencias para quienes buscan alquilar una casa.</li>
+      <li><a href="#">Decoración</a> – Ideas para decorar y personalizar tu hogar con estilo y funcionalidad.</li>
+      <li><a href="#">Consejos de Mudanza</a> – Tips para mudanzas rápidas, organizadas y sin estrés.</li>
+      <li><a href="#">Propiedades Destacadas</a> – Conoce las casas más atractivas y con mejores ofertas del mes.</li>
+      <li><a href="#">Noticias Inmobiliarias</a> – Actualizaciones del mercado y noticias relevantes para arrendatarios.</li>
+    </ul>
+  </div>
+
+  <!-- Columna central: Posts -->
+  <div class="principal">
+    <!-- Post 1 -->
+    <div class="post">
+      <img src="https://www.construyehogar.com/wp-content/uploads/2014/07/Dise%C3%B1o-de-interiores-de-sala-moderna.jpg" alt="Decoración moderna">
+      <h3>Cómo decorar tu casa de renta con estilo</h3>
+      <p>Descubre los mejores consejos para hacer que tu casa de renta luzca acogedora y moderna sin gastar demasiado...</p>
+      <span class="leer-mas-btn" onclick="toggleExtra(this)">Leer más...</span>
+      <div class="extra-info">
+        Aprende a combinar colores, elegir muebles multifuncionales, iluminación adecuada y aprovechar cada rincón de tu hogar para que se vea elegante y acogedor.
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post">
+      <img src="https://mudanzascanarias.es/wp-content/uploads/2021/08/couple-moving-in-house-min-scaled.jpg" alt="Mudanza organizada">
+      <h3>5 Tips para una mudanza sin estrés</h3>
+      <p>Organiza tu mudanza de manera eficiente y sin complicaciones con estos cinco consejos prácticos...</p>
+      <span class="leer-mas-btn" onclick="toggleExtra(this)">Leer más...</span>
+      <div class="extra-info">
+        Planifica con anticipación, etiqueta cajas, utiliza materiales de calidad, prioriza objetos esenciales y coordina transporte confiable para un traslado tranquilo.
+      </div>
+    </div>
+
+    <!-- Post 3 -->
+    <div class="post">
+      <img src="https://propiedadescom.s3.amazonaws.com/files/1200x507/villa-bonita-ensenada-baja-california-villa-bonita-ensenada-baja-california-25796976-foto-01.jpg" alt="Propiedades destacadas">
+      <h3>Propiedades destacadas del mes</h3>
+      <p>Conoce las casas más buscadas y las promociones especiales de este mes...</p>
+      <span class="leer-mas-btn" onclick="toggleExtra(this)">Leer más...</span>
+      <div class="extra-info">
+        Encontrarás opciones con excelente ubicación, diseño moderno y precios competitivos. Ideal para quienes desean invertir en una renta de calidad o buscar su próximo hogar temporal sin sacrificar comodidad ni estilo.
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna derecha: Posts recientes -->
+  <div class="columna recientes">
+    <h2>Posts Recientes</h2>
+    <ul>
+      <li><a href="#">Cómo elegir la mejor zona para vivir</a> – Factores clave al seleccionar la ubicación ideal para tu casa de renta.</li>
+      <li><a href="#">Errores comunes al rentar una casa</a> – Evita problemas frecuentes y aprende a leer contratos correctamente.</li>
+      <li><a href="#">Ventajas de rentar una casa amueblada</a> – Comodidad y ahorro de tiempo al elegir propiedades con muebles incluidos.</li>
+      <li><a href="#">Tendencias de decoración 2025</a> – Inspiración para mantener tu hogar moderno y acogedor según las últimas tendencias.</li>
+      <li><a href="#">Guía rápida para primeros arrendatarios</a> – Todo lo que necesitas saber antes de firmar tu primer contrato de renta.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+function toggleExtra(element) {
+  const extra = element.nextElementSibling;
+  if (extra.style.display === "block") {
+    extra.style.display = "none";
+    element.textContent = "Leer más...";
+  } else {
+    extra.style.display = "block";
+    element.textContent = "Leer menos...";
+  }
+}
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="renta de casas, alquiler, inmobiliaria, departamentos" />
+  <meta name="description" content="CasasPlus - Sistema web para renta de casas en línea" />
+  <meta name="author" content="Equipo de Desarrollo" />
+
+  <title>{% block titulo %}CasasPlus - Renta de Casas{% endblock %}</title>
+
+  <!-- Fuentes y estilos -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    html, body { height:100%; display:flex; flex-direction:column; background:#f8f9fb; color:#2c3e50; }
+    .main { flex:1; padding:20px; }
+    a { text-decoration:none; }
+    ul { list-style:none; }
+
+    /* Header */
+    .header {
+      background:#fff;
+      box-shadow:0 3px 15px rgba(0,0,0,0.1);
+      padding:12px 30px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:100;
+    }
+
+    .navbar-brand { font-size:1.9rem; font-weight:700; color:#2c3e50; }
+    .navbar-brand span { color:#27ae60; }
+
+    nav ul { display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
+    nav ul li { position:relative; }
+    nav ul li a {
+      font-weight:500; color:#2c3e50; padding:8px 14px; border-radius:6px;
+      transition:all 0.3s ease;
+    }
+    nav ul li a:hover { background: rgba(39,174,96,0.1); color:#27ae60; }
+
+    /* Dropdown */
+    .dropdown-content {
+      display:none;
+      position:absolute;
+      background:#f7f9fc;
+      min-width:160px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.1);
+      border-radius:6px;
+      margin-top:5px;
+      right:0;
+      padding:0;
+      z-index:10;
+    }
+    .dropdown-content li a {
+      display:block; padding:10px 15px; color:#34495e;
+    }
+    .dropdown-content li a:hover {
+      background:#27ae60; color:white; border-radius:6px;
+    }
+    .dropdown:hover .dropdown-content { display:block; }
+    .dropdown:hover > a { color:#27ae60; }
+
+    /* User menu */
+    .user-menu { display:flex; align-items:center; gap:10px; }
+    .user-welcome { font-weight:500; }
+    .user-role { padding:4px 8px; border-radius:12px; font-size:0.8rem; font-weight:500; color:white; background:#27ae60; }
+    .user-role.admin { background:#e74c3c; }
+    .user-role.moderator { background:#f39c12; }
+
+    .login-btn, .publicar-btn {
+      background:#27ae60; color:white !important; padding:8px 18px; border-radius:6px; font-weight:600;
+      transition:all 0.3s ease;
+    }
+    .login-btn:hover, .publicar-btn:hover { background:#1e874b; transform:translateY(-2px); box-shadow:0 4px 10px rgba(39,174,96,0.3); }
+
+    /* Footer */
+    footer { background:#2c3e50; color:white; text-align:center; padding:40px 20px; margin-top:auto; }
+    footer .footer-logo { font-size:1.6rem; font-weight:bold; }
+    footer .footer-logo span { color:#27ae60; }
+    footer .footer-links { margin:15px 0; }
+    footer .footer-links a { color:#ecf0f1; margin:0 10px; font-weight:500; transition:all 0.3s ease; }
+    footer .footer-links a:hover { color:#27ae60; }
+    footer .social-icons a { color:#ecf0f1; margin:0 10px; font-size:1.4rem; transition:all 0.3s ease; }
+    footer .social-icons a:hover { color:#27ae60; }
+    footer .copyright { margin-top:20px; font-size:0.9rem; color:#bdc3c7; }
+
+    /* Responsive */
+    .menu-toggle { display:none; cursor:pointer; font-size:1.5rem; }
+    @media(max-width:900px) {
+      nav ul { flex-direction:column; display:none; width:100%; background:#fff; position:absolute; top:60px; left:0; padding:10px 0; box-shadow:0 3px 15px rgba(0,0,0,0.1); }
+      nav ul.active { display:flex; }
+      .menu-toggle { display:block; }
+      nav ul li { width:100%; text-align:center; }
+      nav ul li .dropdown-content { position:relative; right:auto; top:auto; box-shadow:none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <a class="navbar-brand logo" href="{% url 'casas:Principal'%}">CasasPlus<span>.mx</span></a>
+
+    <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+
+    <nav>
+      <ul id="menu">
+        <li><a href="{% url 'casas:Principal'%}">Inicio</a></li>
+        {% if user.is_authenticated %}
+<li class="dropdown">
+  <a href="#">Casas ▼</a>
+  <ul class="dropdown-content">
+    <li><a href="{% url 'casas:lista_casas' %}">Ver Casas</a></li>
+    {% if user.is_admin %}
+    <li><a href="{% url 'casas:crear_casa' %}">Agregar Casa</a></li>
+    {% endif %}
+  </ul>
+</li>
+{% endif %}
+        <li><a href="{% url 'casas:lista_promociones' %}">Promociones</a></li>
+        <li><a href="{% url 'casas:todas_opiniones' %}">Opiniones</a></li>
+        <li><a href="{% url 'casas:Blog'%}">Blog</a></li>
+        <li><a href="{% url 'casas:Contacto'%}">Contacto</a></li>
+
+        {% if user.is_authenticated %}
+        <li class="user-menu dropdown">
+          <span class="user-welcome">¡Hola, {{ user.username }}!</span>
+          <span class="user-role {% if user.is_admin %}admin{% elif user.is_moderator %}moderator{% endif %}">
+            {% if user.is_admin %}Admin{% elif user.is_moderator %}Mod{% else %}Usuario{% endif %}
+          </span>
+          <a href="#" class="dropbtn">Mi Cuenta ▼</a>
+          <ul class="dropdown-content">
+            <li><a href="{% url 'usuarios:user_dashboard' %}">Dashboard</a></li>
+            {% if user.is_admin %}<li><a href="{% url 'usuarios:admin_dashboard' %}">Admin Panel</a></li>{% elif user.is_moderator %}<li><a href="{% url 'usuarios:moderator_dashboard' %}">Mod Panel</a></li>{% endif %}
+            <li><a href="{% url 'usuarios:user_profile'%}">Mi Perfil</a></li>
+            <li><a href="{% url 'usuarios:my_reservations'%}">Mis Reservas</a></li>
+            <li><a href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="{% url 'usuarios:login' %}" class="login-btn">Iniciar Sesión</a></li>
+        <li><a href="{% url 'usuarios:register' %}" class="login-btn">Registrarse</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <div class="main">
+    {% block contenido %}{% endblock %}
+  </div>
+
+  <footer>
+    <div class="footer-logo">CasasPlus<span>.mx</span></div>
+    <div class="footer-links">
+      <a href="{% url 'casas:Principal' %}">Inicio</a> |
+      <a href="">Casas</a> |
+      <a href="">Promociones</a> |
+      <a href="{% url 'casas:Blog' %}">Blog</a> |
+      <a href="">Opiniones</a> |
+      <a href="{% url 'casas:Contacto' %}">Contacto</a>
+      {% if user.is_authenticated %} | <a href="{% url 'usuarios:user_dashboard' %}">Mi Cuenta</a> {% endif %}
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <div class="copyright">©️ 2025 CasasPlus.mx - Todos los derechos reservados</div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>

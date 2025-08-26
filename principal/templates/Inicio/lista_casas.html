@@ -1,0 +1,127 @@
+{% extends 'inicio/encabezado.html' %}
+{% block contenido %}
+
+<style>
+    body {
+        background-color: #f4f7fa;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1e874b;
+        font-weight: 600;
+    }
+
+    .casas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .casa-card {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .casa-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .casa-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+
+    .casa-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .casa-card h3 {
+        font-size: 1.25rem;
+        color: #1e874b;
+        margin: 1rem;
+    }
+
+    .casa-card p {
+        margin: 0 1rem 1rem 1rem;
+        color: #555;
+    }
+
+    .casa-card p strong {
+        color: #333;
+    }
+
+    /* Botones de acción */
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .card-actions a {
+        text-decoration: none;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        transition: background 0.3s;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-detalles { background-color: #1e874b; }
+    .btn-detalles:hover { background-color: #166438; }
+
+    .btn-editar { background-color: #007bff; }
+    .btn-editar:hover { background-color: #0056b3; }
+
+    .btn-eliminar { background-color: #dc3545; }
+    .btn-eliminar:hover { background-color: #a71d2a; }
+
+    .card-actions i {
+        margin-right: 0.4rem;
+    }
+</style>
+
+<h1>Casas Disponibles</h1>
+<div class="casas-grid">
+    {% for casa in casas %}
+    <div class="casa-card">
+        {% if casa.imagen %}
+            <img src="{{ casa.imagen.url }}" alt="{{ casa.titulo }}">
+        {% else %}
+            <img src="" alt="Imagen no disponible">
+        {% endif %}
+        <h3>{{ casa.titulo }}</h3>
+        <p>{{ casa.descripcion|truncatechars:100 }}</p>
+        <p><strong>Precio:</strong> ${{ casa.precio }}</p>
+
+        {% if user.is_staff %}
+        <div class="card-actions">
+            <a href="{% url 'casas:detalles_casa' casa.id %}" class="btn-detalles"><i class="fas fa-info-circle"></i> Detalles</a>
+            <a href="{% url 'casas:editar_casa' casa.id %}" class="btn-editar"><i class="fas fa-edit"></i> Editar</a>
+            <a href="{% url 'casas:eliminar_casa' casa.id %}" class="btn-eliminar" onclick="return confirm('¿Seguro que quieres eliminar esta casa?');"><i class="fas fa-trash-alt"></i> Eliminar</a>
+        </div>
+        {% else %}
+        <div class="card-actions">
+            <a href="{% url 'casas:detalles_casa' casa.id %}" class="btn-detalles"><i class="fas fa-info-circle"></i> Detalles</a>
+        </div>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No hay casas disponibles por el momento.</p>
+    {% endfor %}
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

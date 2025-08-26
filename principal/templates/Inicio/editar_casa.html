@@ -1,0 +1,190 @@
+{% extends 'inicio/encabezado.html' %}
+{% load static %}
+
+{% block contenido %}
+<style>
+    /* Fondo general */
+    body {
+        background-color: #f8f9fc;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Centrar la tarjeta */
+    .form-container {
+        max-width: 800px;
+        margin: 3rem auto;
+    }
+
+    /* Tarjeta principal */
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        overflow: hidden;
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #1e874b, #1e874b);
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    /* Inputs y selects */
+    .form-control, .form-check-input {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        border-color: #4e73df;
+    }
+
+    /* Labels */
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Botones */
+    .btn-primary {
+        background-color: #1e874b;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background-color: grey;
+    }
+
+    .btn-secondary {
+        border-radius: 8px;
+    }
+
+    /* Mensajes de error */
+    .text-danger {
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+
+    /* Separación entre filas */
+    .row.g-3 > [class^="col-"] {
+        margin-bottom: 1rem;
+    }
+
+    /* Iconos en los botones */
+    .btn i {
+        margin-right: 0.5rem;
+    }
+
+    /* Imagen actual */
+    .current-image {
+        display: block;
+        margin-bottom: 1rem;
+        max-width: 200px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+</style>
+
+<div class="form-container">
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-edit"></i> Editar Casa
+        </div>
+        <div class="card-body p-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row g-3">
+                    <!-- Mostrar imagen actual -->
+                    {% if form.instance.imagen %}
+                    <div class="col-md-12 text-center">
+                        <img src="{{ form.instance.imagen.url }}" alt="{{ form.instance.titulo }}" class="current-image">
+                    </div>
+                    {% endif %}
+
+                    <!-- Campos del formulario -->
+                    <div class="col-md-6">
+                        <label class="form-label">Título</label>
+                        {{ form.titulo }}
+                        {% if form.titulo.errors %}<div class="text-danger">{{ form.titulo.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Precio de Renta</label>
+                        {{ form.precio }}
+                        {% if form.precio.errors %}<div class="text-danger">{{ form.precio.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Dirección</label>
+                        {{ form.direccion }}
+                        {% if form.direccion.errors %}<div class="text-danger">{{ form.direccion.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Ciudad</label>
+                        {{ form.ciudad }}
+                        {% if form.ciudad.errors %}<div class="text-danger">{{ form.ciudad.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Habitaciones</label>
+                        {{ form.habitaciones }}
+                        {% if form.habitaciones.errors %}<div class="text-danger">{{ form.habitaciones.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Baños</label>
+                        {{ form.banos }}
+                        {% if form.banos.errors %}<div class="text-danger">{{ form.banos.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Metros cuadrados</label>
+                        {{ form.metros_cuadrados }}
+                        {% if form.metros_cuadrados.errors %}<div class="text-danger">{{ form.metros_cuadrados.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label">Descripción</label>
+                        {{ form.descripcion }}
+                        {% if form.descripcion.errors %}<div class="text-danger">{{ form.descripcion.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Imagen</label>
+                        {{ form.imagen }}
+                        {% if form.imagen.errors %}<div class="text-danger">{{ form.imagen.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">¿Disponible?</label>
+                        {{ form.publicado }}
+                        {% if form.publicado.errors %}<div class="text-danger">{{ form.publicado.errors }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'casas:lista_casas' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

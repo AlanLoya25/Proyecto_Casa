@@ -1,0 +1,175 @@
+{% extends "inicio/encabezado.html" %}
+{% load static %}
+
+{% block titulo %}Contacto - CasasPlus.mx{% endblock %}
+
+{% block contenido %}
+<style>
+  /* ===== ESTILOS GENERALES ===== */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fb;
+    color: #2c3e50;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 20px;
+    color: #27ae60;
+    font-weight: bold;
+  }
+
+  p.subtitulo {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 40px;
+  }
+
+  /* ===== SECCIÓN CONTACTO ===== */
+  .contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .contact-info {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .contact-info h2 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .contact-info p {
+    color: #555;
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  .contact-info i {
+    color: #27ae60;
+    margin-right: 10px;
+  }
+
+  .contact-form {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .contact-form h2 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: #27ae60;
+    box-shadow: 0 0 5px rgba(39, 174, 96, 0.3);
+  }
+
+  .contact-form button {
+    background-color: #27ae60;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .contact-form button:hover {
+    background-color: #1e874b;
+    transform: translateY(-2px);
+  }
+
+  /* ===== GOOGLE MAPS ===== */
+  .map-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
+
+  iframe {
+    border: none;
+    width: 100%;
+    height: 350px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .contact-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<h1>Contáctanos</h1>
+<p class="subtitulo">Estamos aquí para ayudarte a encontrar la casa de tus sueños 🏡</p>
+
+<div class="contact-container">
+  <!-- Información de contacto -->
+  <div class="contact-info">
+    <h2>Información de Contacto</h2>
+    <p><i class="fas fa-map-marker-alt"></i> Av. Revolución 123, Monterrey, NL</p>
+    <p><i class="fas fa-phone"></i> +52 81 1234 5678</p>
+    <p><i class="fas fa-envelope"></i> contacto@casasplus.mx</p>
+    <p><i class="fas fa-clock"></i> Lunes a Viernes · 9:00 AM - 7:00 PM</p>
+    <p><i class="fas fa-clock"></i> Sábados · 10:00 AM - 3:00 PM</p>
+  </div>
+
+  <!-- Formulario de contacto -->
+  <div class="contact-form">
+    <h2>Envíanos un Mensaje</h2>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <input type="text" name="nombre" placeholder="Tu nombre" required>
+      <input type="email" name="correo" placeholder="Tu correo" required>
+      <input type="tel" name="telefono" placeholder="Tu teléfono" required>
+      <textarea name="mensaje" rows="5" placeholder="Escribe tu mensaje aquí..." required></textarea>
+      <button type="submit"><i class="fas fa-paper-plane"></i> Enviar Mensaje</button>
+    </form>
+  </div>
+</div>
+
+<!-- Google Maps -->
+<div class="map-container">
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.123456789!2d-99.1332089!3d19.4326077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1f92b1b7!2sCasasPlus!5e0!3m2!1ses!2smx!4v1623456789012!5m2!1ses!2smx"
+    allowfullscreen=""
+    loading="lazy">
+  </iframe>
+</div>
+{% endblock %}

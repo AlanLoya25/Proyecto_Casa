@@ -1,0 +1,24 @@
+{% extends 'inicio/encabezado.html' %}
+
+{% block contenido %}
+<div class="container my-5">
+    <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-danger text-white text-center">
+            <h3><i class="fas fa-trash-alt"></i> Eliminar Casa</h3>
+        </div>
+        <div class="card-body text-center">
+            <p>¿Seguro que deseas eliminar la casa <strong>{{ casa.titulo }}</strong>?</p>
+            <form method="post">
+                {% csrf_token %}
+                <a href="{% url 'casas:admin_lista_casas' %}" class="btn btn-secondary px-4">
+                    <i class="fas fa-arrow-left"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-danger px-4">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

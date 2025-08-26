@@ -1,0 +1,99 @@
+{% extends 'inicio/encabezado.html' %}
+{% block contenido %}
+<style>
+    body {
+        background-color: #f5f7fa;
+    }
+
+    .opiniones-container {
+        max-width: 900px;
+        margin: 3rem auto;
+    }
+
+    .opiniones-container h2 {
+        text-align: center;
+        color: #1e874b;
+        font-weight: 600;
+        margin-bottom: 2rem;
+    }
+
+    .opinion-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .opinion-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    .opinion-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .opinion-username {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .opinion-date {
+        font-size: 0.85rem;
+        color: #777;
+    }
+
+    .opinion-message {
+        margin-top: 0.5rem;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    .btn-volver {
+        display: inline-block;
+        margin-top: 1.5rem;
+        background-color: #1e874b;
+        color: white;
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+
+    .btn-volver:hover {
+        background-color: #166438;
+    }
+
+    .text-muted-center {
+        text-align: center;
+        color: #777;
+        font-style: italic;
+    }
+</style>
+
+<div class="opiniones-container">
+    <h2>Opiniones sobre: {{ casa.titulo }}</h2>
+
+    {% for opinion in opiniones %}
+    <div class="opinion-card">
+        <div class="opinion-header">
+            <span class="opinion-username">{{ opinion.usuario.username }}</span>
+            <span class="opinion-date">{{ opinion.fecha_creacion|date:"d/m/Y H:i" }}</span>
+        </div>
+        <p class="opinion-message">{{ opinion.mensaje }}</p>
+    </div>
+    {% empty %}
+    <p class="text-muted-center">No hay opiniones todavía para esta casa.</p>
+    {% endfor %}
+
+    <a href="{% url 'casas:detalles_casa' opiniones.first.casa.id %}" class="btn-volver">
+        <i class="fas fa-arrow-left"></i> Volver a la casa
+    </a>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}

@@ -1,0 +1,275 @@
+{% block content %}
+<style>
+/* Contenedor principal */
+.register-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    padding: 40px 20px;
+}
+
+/* Tarjeta */
+.register-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    overflow: hidden;
+    width: 100%;
+    max-width: 650px;
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+}
+
+/* Header */
+.card-header {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+    color: #fff;
+    padding: 35px 30px 25px;
+    text-align: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Cuerpo del formulario */
+.card-body {
+    padding: 35px 30px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 14px;
+}
+
+.form-control {
+    border: 1px solid #d1d8e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
+    width: 100%;
+    background: #fdfdfd;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #27ae60;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(39, 174, 96, 0.25);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Botones */
+.btn {
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-success {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #2ecc71;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(39, 174, 96, 0.3);
+}
+
+.btn-secondary {
+    background: #ecf0f1;
+    color: #7f8c8d;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: #dfe6e9;
+    color: #2c3e50;
+    transform: translateY(-2px);
+}
+
+/* Errores y alertas */
+.alert {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #e9f7ef;
+    border-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background: #fef0f0;
+    border-color: #f8d7da;
+    color: #721c24;
+}
+
+.text-danger {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+/* Links de login */
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.login-link a {
+    color: #27ae60;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #2ecc71;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-container {
+        padding: 20px 15px;
+    }
+    
+    .card-body {
+        padding: 25px 20px;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .row {
+        margin: 0;
+    }
+    
+    .col-md-6 {
+        padding: 0;
+        margin-bottom: 15px;
+    }
+}
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="card-header">
+            <h3>Crear Cuenta</h3>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Usuario</label>
+                        <input type="text" name="username" class="form-control" placeholder="Nombre de usuario" required>
+                        {% if form.username.errors %}
+                            <div class="text-danger">{{ form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="correo@ejemplo.com" required>
+                        {% if form.email.errors %}
+                            <div class="text-danger">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" name="password1" class="form-control" placeholder="Mínimo 8 caracteres" required>
+                        {% if form.password1.errors %}
+                            <div class="text-danger">{{ form.password1.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Confirmar Contraseña</label>
+                        <input type="password" name="password2" class="form-control" placeholder="Repetir contraseña" required>
+                        {% if form.password2.errors %}
+                            <div class="text-danger">{{ form.password2.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="first_name" class="form-control" placeholder="Tu nombre">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" name="last_name" class="form-control" placeholder="Tu apellido">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" name="phone" class="form-control" placeholder="Número de teléfono">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Dirección</label>
+                    <textarea name="address" class="form-control" placeholder="Dirección completa"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">Crear Cuenta</button>
+                    <a href="{% url 'usuarios:login' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+            
+            <div class="login-link">
+                <p>¿Ya tienes cuenta? <a href="{% url 'usuarios:login' %}">Iniciar sesión</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

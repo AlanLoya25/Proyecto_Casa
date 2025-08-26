@@ -1,0 +1,147 @@
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 450px;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .card-header {
+    background-color: #27ae60;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .card-header h3 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 30px 25px;
+  }
+
+  .card-body .alert {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+
+  form .form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  form input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  form input:focus {
+    outline: none;
+    border-color: #27ae60;
+    box-shadow: 0 0 5px rgba(39,174,96,0.4);
+  }
+
+  .btn-primary {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #1e874b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(39,174,96,0.3);
+  }
+
+  hr {
+    margin: 20px 0;
+    border-color: #eee;
+  }
+
+  .card-body p {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .card-body a {
+    color: #27ae60;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .card-body a:hover {
+    text-decoration: underline;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Iniciar Sesión</h3>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Usuario</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Contraseña</label>
+                        {{ form.password }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </form>
+                
+                <hr>
+                <p>¿No tienes cuenta? <a href="{% url 'usuarios:register' %}">Regístrate aquí</a></p>
+                <p><a href="{% url 'usuarios:password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
